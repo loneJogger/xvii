@@ -1,11 +1,13 @@
 import express, { application } from "express";
+import userRouter from "./api/user.js";
+
+const PORT = 5000;
 
 const app = express();
+app.use("/user", userRouter);
 
-app.get("/", (req, res) => {
-  res.send("server is up");
-});
-
-app.listen(5000, () => {
-  console.log("Server is running on port 5000");
+app.listen(PORT, () => {
+  console.log(` XVII server is running on port ${PORT}`);
+  console.log("-------------------------------------");
+  console.log("");
 });
