@@ -1,0 +1,17 @@
+version: "1.0"
+
+services:
+  db:
+    image: postgres:14
+    ports:
+      - 5432:5432
+    environment:
+      - POSTGRES_USER=dev
+      - POSTGRES_DB=dev_db
+      - POSTGRES_PASSWORD=password
+    volumes:
+      - pg14Db:/var/lib/postgresql/data
+
+volumes:
+  pg14Db:
+    driver: local
