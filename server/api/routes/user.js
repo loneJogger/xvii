@@ -5,7 +5,7 @@ const userRouter = express.Router();
 /**
  * creates a new user
  */
-userRouter.post("/create", (req, res, next) => {});
+userRouter.post("/", (req, res, next) => {});
 
 /**
  * returns a single user

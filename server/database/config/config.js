@@ -1,12 +1,13 @@
-require("dotenv").config();
+import dotenv from "dotenv";
 
-module.exports = {
-  development: {
-    url: process.env.DEV_DATABASE_URL,
-    dialect: "postgres",
-  },
-  production: {
-    url: process.env.PROD_DB_URL,
-    dialect: "postgres",
-  },
+const development = {
+  url: "postgres://dev:password@127.0.0.1:5432/dev_db",
+  dialect: "postgres",
 };
+
+const production = {
+  url: "postgres://dev:password@127.0.0.1:5432/dev_db",
+  dialect: "postgres",
+};
+
+export default { development, production };

@@ -1,6 +1,6 @@
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    await queryInterface.createTable("users", {
+    await queryInterface.createTable("films", {
       id: {
         allowNull: false,
         primaryKey: true,
@@ -8,10 +8,20 @@ module.exports = {
         type: Sequelize.UUID,
         defaultValue: Sequelize.UUIDV4,
       },
-      username: {
+      name: {
         type: Sequelize.STRING,
         allowNull: false,
         unique: true,
+      },
+      year: {
+        type: Sequelize.INTEGER,
+        allowNull: true,
+      },
+      metadata: {
+        type: Sequelize.JSONB,
+        defaultValue: {
+          tags: [],
+        },
       },
       createdAt: {
         allowNull: false,
@@ -26,6 +36,6 @@ module.exports = {
     });
   },
   down: async (queryInterface) => {
-    await queryInterface.dropTable("users");
+    await queryInterface.dropTable("films");
   },
 };
