@@ -4,14 +4,13 @@
 
 ## History:
 
-- 2.25.2023: intialized repo
-- 2.27.2023: initalized node app
-- 2.28.2023: built some stuff
+- 02.25.2023: intialized repo
+- 02.27.2023: initalized node app
+- 02.28.2023: built some stuff
+- 03.04.2023: added user auth with sessions
 
 ## TO DO:
 
-- get env vars to work
-- setup auth
 - set up logging
 - add express app to docker compose
 
