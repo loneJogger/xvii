@@ -10,4 +10,9 @@
 
 ## TO DO:
 
+- get env vars to work
+- setup auth
+- set up logging
+- add express app to docker compose
+
 ## Notes:
