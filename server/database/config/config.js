@@ -1,13 +1,17 @@
-import dotenv from "dotenv";
+import dotenv from 'dotenv'
+dotenv.config()
 
 const development = {
-  url: "postgres://dev:password@127.0.0.1:5432/dev_db",
-  dialect: "postgres",
-};
+    url: process.env.DB_CONNECT_DEV,
+    dialect: 'postgres',
+}
 
 const production = {
-  url: "postgres://dev:password@127.0.0.1:5432/dev_db",
-  dialect: "postgres",
-};
+    url: process.env.DB_CONNECT_PROD,
+    dialect: 'postgres',
+}
 
-export default { development, production };
+export default { 
+    development, 
+    production 
+}

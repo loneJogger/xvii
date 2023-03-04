@@ -1,6 +1,7 @@
-import dotenv from "dotenv";
-import { Sequelize } from "sequelize";
+import dotenv from 'dotenv'
+import { Sequelize } from 'sequelize'
+dotenv.config()
 
-export default new Sequelize("postgres://dev:password@127.0.0.1:5432/dev_db", {
-  dialect: "postgres",
-});
+export default new Sequelize(process.env.DB_CONNECT_DEV, {
+    dialect: 'postgres',
+})
