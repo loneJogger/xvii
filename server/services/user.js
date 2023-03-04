@@ -29,24 +29,21 @@ const makeAuthToken = (session) => {
 
 // authenticates a user session token and returns either the decoded token, isExpired flag, or an error 
 const checkAuthToken = (token) => {
-    jwt.verify(token, process.env.SESSION_JWT_SECRET, (error, decoded) => {
-        if (error) {
-            if (error.name === 'TokenExpiredError') {
-                console.log('this session is expired')
-                return { 
-                    isExpired: true,
-                }
-            } else {
-                console.log(error)
-                throw error
+    try {
+        const decoded  = jwt.verify(token, process.env.SESSION_JWT_SECRET)
+        return {
+            session: decoded
+        }
+    } catch (e) {
+        if (e.name === 'TokenExpiredError') {
+            console.log('this session is expired')
+            return { 
+                isExpired: true,
             }
         } else {
-            console.log(decoded)
-            return {
-                session: decoded
-            }
+            throw e
         }
-    })
+    }
 }
 
 // finds a user in the db, compares the passwords, and returns a new user session
@@ -63,7 +60,7 @@ const userLogin = async (username, password) => {
             message: 'not found: no user found with this username.'
         }
     }
-    if (!comparePassword(password, user.password)) {
+    if (!await comparePassword(password, user.password)) {
         throw {
             type: 'wrongPassword',
             message: 'wrong pass: the provided password does not match stored password.'
@@ -82,11 +79,24 @@ const userCreate = async (username, password) => {
             message: 'invalid password: passwords must be at least 8 characters long'
         }
     }
-    const hashed = hashPassword(password)
-    return await User.create({ username, password })
+    const hashed = await hashPassword(password)
+    try {
+        const newUser = await User.create({ username, password: hashed })
+        return {
+            id: newUser.id,
+            username: newUser.username,
+            createdAt: newUser.createdAt,
+        }
+    } catch (e) {
+        throw {
+            type: 'databaseError',
+            message: 'an error from the database occured',
+            error: e
+        }
+    }
 }
 
-export {
+export default {
     checkAuthToken,
     userLogin,
     userCreate

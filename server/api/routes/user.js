@@ -13,14 +13,19 @@ userRouter.post("/", async (req, res, next) => {
             type: 'invalidBody',
             message: 'invalid body: a new user request must contain a username and a password.' 
         })
-        next()
+    } else {
+        try {
+            const newUser = await userServices.userCreate(username, password)
+            res.status(200).send({
+                type: 'success',
+                message: 'new user created.',
+                user: newUser
+            })
+        } catch (e) {
+            res.status(400).send(e)
+        }
     }
-    const newUser = userServices.userCreate(username, password)
-    res.status(200).send({
-        type: 'success',
-        message: 'new user created.',
-        user: newUser
-    })
+    next()
 })
 
 /**
@@ -53,17 +58,17 @@ userRouter.post('/login', async (req, res, next) => {
             type: 'invalidBody',
             message: 'invalid body: a login request must contain a username and a password.' 
         })
-        next()
-    }
-    try {
-        const session = await userServices.userLogin(username, password)
-        res.status(200).send({
-            type: 'success',
-            message: 'user logged in, session created.',
-            session
-        })
-    } catch (e) {
-        res.status(401).send(e)
+    } else {
+        try {
+            const session = await userServices.userLogin(username, password)
+            res.status(200).send({
+                type: 'success',
+                message: 'user logged in, session created.',
+                session
+            })
+        } catch (e) {
+            res.status(401).send(e)
+        }
     }
     next()
 })
