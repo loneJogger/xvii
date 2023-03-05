@@ -1,8 +1,11 @@
+import './styles/main.css'
+import Button from './components/Button'
+
 const App = () => {
 
   return (
     <div>
-      the webpage goes here.
+      <Button>Click Me</Button>
     </div>
   )
 }
