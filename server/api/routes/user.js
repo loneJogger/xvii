@@ -1,7 +1,9 @@
 import express from "express"
 import userServices from '../../services/user.js'
+import log from '../middleware/log.js'
 
 const userRouter = express.Router()
+userRouter.use(log)
 
 /**
  * creates a new user
