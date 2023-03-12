@@ -1,5 +1,10 @@
 import express from 'express'
 import bodyParser from 'body-parser'
+
+// services
+import logger from './services/log.js'
+
+// routes
 import userRouter from './api/routes/user.js'
 import testRouter from './api/routes/test.js'
 
@@ -10,8 +15,12 @@ app.use(bodyParser.json())
 app.use('/user', userRouter)
 app.use('/debug', testRouter)
 
+logger.entry('new uptime session', 'start')
+
 app.listen(PORT, () => {
     console.log(` XVII server is running on port ${PORT}`)
     console.log('-------------------------------------')
     console.log('')
 })
+
+
