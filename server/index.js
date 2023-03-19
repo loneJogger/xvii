@@ -1,5 +1,6 @@
 import express from 'express'
 import bodyParser from 'body-parser'
+import cors from 'cors'
 
 // services
 import logger from './services/log.js'
@@ -11,6 +12,7 @@ import testRouter from './api/routes/test.js'
 const PORT = 5000
 
 const app = express()
+app.use(cors())
 app.use(bodyParser.json())
 app.use('/user', userRouter)
 app.use('/debug', testRouter)

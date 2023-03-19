@@ -1,5 +1,20 @@
 body {
     padding: 12px;
     background: #110307;
-    color: #eab4d5;
+    color: #fceef2;
 }
+
+a {
+    text-decoration: none;
+    cursor: pointer;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+hr {
+    border: none;
+    height: 1px;
+}
+

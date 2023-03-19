@@ -1,6 +1,7 @@
 import express from "express"
 import userServices from '../../services/user.js'
 import log from '../middleware/log.js'
+import auth from '../middleware/auth.js'
 
 const userRouter = express.Router()
 userRouter.use(log)
@@ -73,6 +74,15 @@ userRouter.post('/login', async (req, res, next) => {
         }
     }
     next()
+})
+
+/**
+ * gets a user provided a session
+ */
+userRouter.get('/session', auth.verifyUserSession, async (req, res, next) => {
+    const { username } = userServices.checkAuthToken(req.headers['authorization'])
+    const user = await userServices.getUserFromUsername(username)
+    res.status(200).send(user)
 })
 
 export default userRouter

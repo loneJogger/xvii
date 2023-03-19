@@ -1,6 +1,7 @@
 import dotenv from 'dotenv'
 import jwt from 'jsonwebtoken'
 import bcrypt from 'bcrypt'
+import { Op } from 'sequelize'
 import User from '../database/models/user.js'
 dotenv.config()
 
@@ -96,8 +97,18 @@ const userCreate = async (username, password) => {
     }
 }
 
+// get a user provided a username
+const getUserFromUsername = async (username) => {
+    return User.findOne({
+        where: {
+            username: { [Op.eq]: username }
+        }
+    })
+}
+
 export default {
     checkAuthToken,
     userLogin,
-    userCreate
+    userCreate,
+    getUserFromUsername,
 }
