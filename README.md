@@ -10,7 +10,8 @@
 - 03.04.2023: added user auth with sessions
 - 03.08.2023: added server to docker compose
 - 03.12.2023: added logging service, begin designing login ui
-- 03.18.2023: implemented login api into client
+- 03.18.2023: implemented login api into client, begin designing header
+- 03.19.2023: added session checking for auto login, decoupled server from docker compose (for now)
 
 ## TO DO:
 

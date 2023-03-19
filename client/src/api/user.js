@@ -15,8 +15,9 @@ const login = async (username, password) => {
         })
         return res.data
     } catch (e) {
-        console.log(e)
-        return e
+        const res = e.response.data
+        console.log(res)
+        return res
     }
 }
 
@@ -35,8 +36,9 @@ const create = async (username, password) => {
         })
         return res.data
     } catch (e) {
-        console.log(e)
-        return e
+        const res = e.response.data
+        console.log(res)
+        return res
     }
 }
 
@@ -44,7 +46,7 @@ const checkSession = async (session) => {
     try {
         const res = await axios({
             method: 'GET',
-            url: 'server:5000/user/session',
+            url: 'http://localhost:5000/user/session',
             headers: {
                 'Authorization': session
             }
@@ -52,7 +54,9 @@ const checkSession = async (session) => {
         return res.data
     } catch (e) {
         console.log(e)
-        return e
+        const res = e.response.data
+        console.log(res)
+        return res
     }
 }
 

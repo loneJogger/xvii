@@ -1,75 +1,18 @@
 import { useState, useEffect } from 'react'
-import styled from 'styled-components'
 import { useCookies } from 'react-cookie'
 import ScaleLoader from 'react-spinners/ScaleLoader'
 
 import Button from './Button'
-import { login, create } from '../api/user'
-
-const OuterShell = styled.div`
-        display: flex;
-        background-color: #fceef2;
-        box-shadow: 0px 0px 32px 8px rgba(252, 238, 242, 0.8);
-        width: 30%;
-        height: 320px;
-    `
-
-const Shell = styled.div`
-    margin: 8px;
-    padding: 8px;
-    color: #110307;
-    background-color: #fceef2;
-    border: 1px solid #110307;
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    & > h2 {
-        font-size: 32px;
-        font-family: 'Terminal';
-        margin: 8px;
-        text-align: center;
-    }
-    & > div {
-        display: flex;
-        flex-direction: column;
-        margin: 8px 8px;
-    }
-    & > div > label {
-        font-size: 16px;
-        font-family: 'Anon';
-    }
-    & > div > input {
-        margin-bottom: 8px;
-        padding: 4px;
-        border: none;
-        color: #fceef2;
-        background-color: #110307;
-        font-family: 'Anon';
-
-    }
-    & > div > div {
-        display: flex;
-        justify-content: space-between;
-    }
-    & > hr {
-        color: #110307;
-        background-color: #110307;
-        margin-left: 0;
-        margin-right: 0;
-    }
-    & > p {
-        font-size: 16px;
-        font-family: 'Anon';
-        margin: 8px;
-        text-align: center;
-    }
-`
+import { login, create, checkSession } from '../api/user'
+import '../styles/components.css'
 
 const SignIn = props => {
 
     const [ page, setPage ] = useState(0)
     const [ isLoading, setIsLoading ] = useState(false)
     const [ loginRes, setLoginRes ] = useState({})
+    const [ createRes, setCreateRes ] = useState({})
+    const [ checkSessRes, setCheckSessRes ] = useState({})
     const [ error, setError ] = useState('')
     const [ message, setMessage ] = useState('')
 
@@ -78,12 +21,24 @@ const SignIn = props => {
     const [ newUser, setNewUser ] = useState('')
     const [ newPass, setNewPass ] = useState('')
 
-    const [ user, setUser ] = useState({ username: '', isLogin: false })
-
     const [ cookies, setCookie ] = useCookies(['session'])
 
     useEffect(() => {
-        console.log(loginRes)
+        const getSession = async () => {
+            if (cookies.session) {
+                setCheckSessRes(await checkSession(cookies.session))
+            }
+        }
+        getSession()
+    }, [])
+
+    useEffect(() => {
+        if (checkSessRes && checkSessRes.type === 'success') {
+            props.passUser({ username: checkSessRes.user.username, isLogin: true })
+        }
+    }, [checkSessRes])
+
+    useEffect(() => {
         if (loginRes && loginRes.type === 'success') {
             setCookie('session', loginRes.session, { path: '/' })
             props.passUser({ username: username, isLogin: true })
@@ -94,6 +49,16 @@ const SignIn = props => {
             setIsLoading(false)
         }
     }, [loginRes])
+
+    useEffect(() => {
+        if (createRes && createRes.type === 'success') {
+            setMessage(createRes.message)
+            setIsLoading(false)
+        } else if (createRes && createRes.type !== 'success') {
+            setError(createRes.message)
+            setIsLoading(false)
+        }
+    }, [createRes])
 
     const clearValues = () => {
         setUsername('')
@@ -111,54 +76,47 @@ const SignIn = props => {
     const submitCreate = async () => {
         setPage(2)
         setIsLoading(true)
-        const createAttempt = await create(newUser, newPass)
-        if (createAttempt.type === 'success') {
-            setMessage(createAttempt.message)
-            setIsLoading(false)
-        } else {
-            setError(createAttempt.error)
-            setIsLoading(false)
-        }
+        setCreateRes(await create(newUser, newPass))
     }
 
     return (
-        <OuterShell>
-            <Shell>
+        <div className='modal-outer'>
+            <div className='modal-inner'>
                 <>
                 {page === 0 && (
                         <>
-                        <h2>Log In</h2>
-                        <hr />
-                        <div>
-                            <label>username</label>
-                            <input value={username} onChange={(e) => { setUsername(e.target.value) }} />
-                            <label>password</label>
-                            <input value={password} onChange={(e) => { setPassword(e.target.value) }} />
-                            <div>
+                        <h2 className='modal-title'>Log In</h2>
+                        <hr className='modal-rule'/>
+                        <div className='modal-body'>
+                            <label className='modal-label'>username</label>
+                            <input className='modal-input' value={username} onChange={(e) => { setUsername(e.target.value) }} />
+                            <label className='modal-label'>password</label>
+                            <input className='modal-input' value={password} onChange={(e) => { setPassword(e.target.value) }} />
+                            <div className='modal-button-row'>
                                 <Button execute={clearValues}>Clear</Button>
                                 <Button execute={submitLogin}>Submit</Button>
                             </div>
                         </div>
-                        <hr />
-                        <p>Need to make an account? <a onClick={() => {setPage(1)}}>Create one here</a>.</p>
+                        <hr className='modal-rule'/>
+                        <p className='modal-text'>Need to make an account? <a onClick={() => {setPage(1)}}>Create one here</a>.</p>
                         </>
                     )}
                     {page === 1 && (
                         <>
-                        <h2>Create a New User</h2>
-                        <hr />
-                        <div>
-                            <label>username</label>
-                            <input value={newUser} onChange={(e) => { setNewUser(e.target.value) }} />
-                            <label>password</label>
-                            <input value={newPass} onChange={(e) => { setNewPass(e.target.value) }} />
-                            <div>
+                        <h2 className='modal-title'>Create a New User</h2>
+                        <hr className='modal-rule'/>
+                        <div className='modal-body'>
+                            <label className='modal-label'>username</label>
+                            <input className='modal-input' value={newUser} onChange={(e) => { setNewUser(e.target.value) }} />
+                            <label className='modal-label'>password</label>
+                            <input className='modal-input' value={newPass} onChange={(e) => { setNewPass(e.target.value) }} />
+                            <div className='modal-button-row'>
                                 <Button execute={clearValues}>Clear</Button>
                                 <Button execute={submitCreate}>Submit</Button>
                             </div>
                         </div>
-                        <hr />
-                        <p><a onClick={() => {setPage(0)}}>Return to Log In</a></p>
+                        <hr className='modal-rule'/>
+                        <p className='modal-text'><a onClick={() => {setPage(0)}}>Return to Log In</a></p>
                         </>
                     )}
                     {page === 2 && (
@@ -182,17 +140,17 @@ const SignIn = props => {
                         <div>
                             {message && (
                                 <>
-                                <p>{message}</p>
+                                <p className='modal-text'>{message}</p>
                                 <div>
-                                    <p><a onClick={() => {setPage(0)}}>Return to Log In</a></p>
+                                    <p className='modal-text'><a onClick={() => {setPage(0)}}>Return to Log In</a></p>
                                 </div>
                                 </>
                             )}
                             {error && (
                                 <>
-                                <p>{error}</p>
+                                <p className='modal-text'>{error}</p>
                                 <div>
-                                <p><a onClick={() => {setPage(0)}}>Retry</a></p>
+                                    <p className='modal-text'><a onClick={() => {setPage(0)}}>Retry</a></p>
                                 </div>
                                 </>
                             )}
@@ -200,10 +158,9 @@ const SignIn = props => {
                         </>
                     )}
                 </>
-            </Shell>
-        </OuterShell>
+            </div>
+        </div>
     )
-
 }
 
 export default SignIn

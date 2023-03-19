@@ -13,18 +13,18 @@ services:
     volumes:
       - pg14Db:/var/lib/postgresql/data
 
-  server:
-    image: xvii-server
-    build: ./server
-    environment:
-      # dev values, will eventually replace with docker secrets
-      - SESSION_JWT_SECRET=cef5c4791b7bfe28ba04d99fe2935f19b516ab8a65dd0a0b009991a53d9707f4
-      - DB_CONNECT_DEV=postgres://dev:password@db:5432/dev_db
-      - ENVIRONMENT=dev_stack
-    ports:
-      - 5000:5000
-    volumes:
-      - log:/var/log/server
+  # server:
+  #   image: xvii-server
+  #   build: ./server
+  #   environment:
+  #     # dev values, will eventually replace with docker secrets
+  #     - SESSION_JWT_SECRET=cef5c4791b7bfe28ba04d99fe2935f19b516ab8a65dd0a0b009991a53d9707f4
+  #     - DB_CONNECT_DEV=postgres://dev:password@db:5432/dev_db
+  #     - ENVIRONMENT=dev_stack
+  #   ports:
+  #     - 5000:5000
+  #   volumes:
+  #     - log:/var/log/server
 
   # client:
   #   image: xvii-client

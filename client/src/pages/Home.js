@@ -7,7 +7,6 @@ const Home = () => {
 
     return (
         <div style={{display: 'flex', justifyContent: 'center'}}>
-            Hello {user.username}!
         </div>
     )
 }

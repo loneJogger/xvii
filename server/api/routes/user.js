@@ -9,7 +9,7 @@ userRouter.use(log)
 /**
  * creates a new user
  */
-userRouter.post("/", async (req, res, next) => {
+userRouter.post('/', async (req, res, next) => {
     const { username, password } = req.body
     if ( !username || !password ) {
         res.status(400).send({
@@ -30,26 +30,6 @@ userRouter.post("/", async (req, res, next) => {
     }
     next()
 })
-
-/**
- * returns a single user
- */
-userRouter.get("/:id", (req, res, next) => {})
-
-/**
- * lists all users
- */
-userRouter.get("/", (req, res, next) => {})
-
-/**
- * updates a user
- */
-userRouter.put("/:id", (req, res, next) => {})
-
-/**
- * deletes a user
- */
-userRouter.delete("/:id", (req, res, next) => {})
 
 /**
  * logs a user in, returns a user session
@@ -80,9 +60,18 @@ userRouter.post('/login', async (req, res, next) => {
  * gets a user provided a session
  */
 userRouter.get('/session', auth.verifyUserSession, async (req, res, next) => {
-    const { username } = userServices.checkAuthToken(req.headers['authorization'])
-    const user = await userServices.getUserFromUsername(username)
-    res.status(200).send(user)
+    const { session } = userServices.checkAuthToken(req.headers['authorization'])
+    const user = await userServices.getUserFromUsername(session.username)
+    res.status(200).send({
+        type: 'success',
+        message: 'session is valid, user automatically logged in.',
+        user: {
+            id: user.id,
+            username: user.username,
+            updatedAt: user.updatedAt
+        }
+    })
+    next()
 })
 
 export default userRouter
