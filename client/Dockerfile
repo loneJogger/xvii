@@ -1,3 +1,5 @@
+# todo: convert to build and then serve client
+
 FROM node:18
 
 WORKDIR /app

@@ -1,0 +1,27 @@
+.button-outer {
+    border: 1px solid #86284f;
+    cursor: pointer;
+    width: fit-content;     
+    transition: border-color 0.5s;
+}
+
+.button-outer:hover {
+    border: 1px solid #110307;
+}
+
+.button-inner {
+    cursor: pointer;
+    padding: 8px 32px;
+    margin: 2px;
+    font-family: 'Terminal';
+    font-size: 16px;
+    background-color: #86284f;
+    color: #fceef2;
+    border: none;
+    transition: color 0.5s, background-color 0.5s;
+}
+
+.button-inner:hover {
+    background-color: #110307;
+    color: #86284f;
+}

@@ -1,6 +1,6 @@
 import { useCookies } from 'react-cookie'
 import '../styles/components.css'
-import icon_power from '../images/icon_power.png'
+import '../styles/header.css'
 
 const Header = (props) => {
 
@@ -13,15 +13,16 @@ const Header = (props) => {
 
     return (
         <div className='header-outer'>
-            <div className='icon-box'>
-                <p className='modal-text' style={{fontSize: '36px', marginTop: '0', lineHeight: '36px'}}>★</p>
-            </div>
-            <p className='modal-text'>_~\| XVII |/~_</p>
+            <a className='component-text icon-info' title='more info'>★</a>
+            <p className='component-text'>_~\| XVII |/~_</p>
             <div className='header-icon-row'>
-                <h2 className='header-title'><a>{props.user.username}</a></h2>
-                <div className='icon-box' onClick={logout}>
-                    <img src={icon_power}/>
-                </div>
+                <h2 className='component-title' style={{margin: '0px 8px'}}><a>{props.user.username}</a></h2>
+                <a 
+                    className='icon-info'
+                    style={{margin: '2px 4px'}} 
+                    onClick={logout}
+                    title='log out'
+                >⏻</a>
             </div>
         </div>
     )
