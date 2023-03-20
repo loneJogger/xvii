@@ -1,0 +1,26 @@
+.component-title {
+    font-size: 32px;
+    font-family: 'Terminal';
+    margin: 8px;
+    text-align: center;
+}
+
+.component-text {
+    font-size: 16px;
+    font-family: 'Anon';
+    margin: 8px;
+    text-align: center;
+}
+
+.icon-info {
+    font-size: 36px;
+    margin-top: 0;
+    line-height: 32px;
+    cursor: pointer;
+    transition: color 2s;
+}
+
+.icon-info:hover {
+    color: #eab4d5;
+    text-decoration: none;
+}

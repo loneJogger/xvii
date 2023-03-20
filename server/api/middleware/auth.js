@@ -15,8 +15,9 @@ const verifyUserSession = (req, res, next) => {
                     type: 'sessionExpired',
                     message: 'this user session is expired.'
                 })
+            } else {
+                next()
             }
-            next()
         } catch (e) {
             res.status(400).send({
                 type: 'authError',

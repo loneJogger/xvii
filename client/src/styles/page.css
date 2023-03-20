@@ -1,0 +1,10 @@
+.page-body {
+    padding: 32px;
+}
+
+.page-title {
+    color: #eab4d5;
+    font-size: 48px;
+    font-family: 'Terminal';
+    text-transform: uppercase;
+}
