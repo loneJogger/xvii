@@ -7,7 +7,6 @@ import logger from './services/log.js'
 
 // routes
 import userRouter from './api/routes/user.js'
-import testRouter from './api/routes/test.js'
 
 const PORT = 5000
 

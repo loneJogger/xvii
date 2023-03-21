@@ -99,7 +99,7 @@ const userCreate = async (username, password) => {
 
 // get a user provided a username
 const getUserFromUsername = async (username) => {
-    return User.findOne({
+    return await User.findOne({
         where: {
             username: { [Op.eq]: username }
         }

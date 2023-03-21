@@ -13,7 +13,12 @@ const Header = (props) => {
 
     return (
         <div className='header-outer'>
-            <a className='component-text icon-info' title='more info'>★</a>
+            <a 
+                className='component-text icon-info' 
+                title='more info'
+                href='info.txt'
+                download='info.txt'
+            >★</a>
             <p className='component-text'>_~\| XVII |/~_</p>
             <div className='header-icon-row'>
                 <h2 className='component-title' style={{margin: '0px 8px'}}><a>{props.user.username}</a></h2>
