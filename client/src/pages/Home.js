@@ -1,12 +1,11 @@
-import { useContext } from 'react'
-import userContext from '../contexts/User'
+import Chat from '../components/Chat'
 
 const Home = () => {
 
-    const user = useContext(userContext)
 
     return (
         <div style={{display: 'flex', justifyContent: 'center'}}>
+            <Chat />
         </div>
     )
 }

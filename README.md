@@ -13,17 +13,21 @@
 - 03.18.2023: implemented login api into client, begin designing header
 - 03.19.2023: added session checking for auto login, decoupled server from docker compose (for now), refined ui
 - 03.20.2023: added chat and mail models, added text file download to info button, added mail api
+- 03.25.2023: added rudimentary chat room
 
 ---
 
 ## to do:
 
 ### soon:
+- chat room: make cool
+- server: move ws chat to it's own component
 - modal css
     - send response/error feedback to notification component
     - add loading to submit button animation
     - make keyboard navigible
     - transition
+- log in modal: make password input hide/show
 - build notification component
 - retouch button (convert to css, remove component)
 
