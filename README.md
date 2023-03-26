@@ -14,29 +14,33 @@
 - 03.19.2023: added session checking for auto login, decoupled server from docker compose (for now), refined ui
 - 03.20.2023: added chat and mail models, added text file download to info button, added mail api
 - 03.25.2023: added chatroom with web socket server
+- 03.26.2023: fixed conditional autoscroll on chat, added show/hide on pass inputs
 
 ---
 
 ## to do:
 
 ### soon:
-- chat room: fix autoscroll
-- server: move ws chat to it's own component
 - modal css
-    - send response/error feedback to notification component
-    - add loading to submit button animation
-    - make keyboard navigible
-    - transition
-- log in modal: make password input hide/show, add confirm pass input and check
+    - input validation and errors displayed in modal
+    - make keyboard navigible (close button, a tags, more visibly selected)                
+    - transition?
 - build notification component
 - retouch button (convert to css, remove component)
 
 ### eventually:
-- web sockets
 - add responsiveness to: logInModal, Header
-- design chatroom and inbox components
-- set up docker secrets
+- design inbox component
 - add client build to docker stack
+
+### for initial release:
+    - [ ] finish login/create modal
+    - [ ] finish mail: inbox page, send modal
+    - [x] finish main chat
+    - [ ] finish temp home page
+    - [ ] incorporate server logging more thoroughly
+    - [ ] env var setup for deployment
+    - [ ] docker stack: db, server, client (w/ build)
 
 ## Notes:
 
