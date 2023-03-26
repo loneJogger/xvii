@@ -11,6 +11,7 @@ const LogInModal = props => {
 
     const [ page, setPage ] = useState(0)
     const [ isLoading, setIsLoading ] = useState(false)
+    const [ showPass, setShowPass ] = useState(false)
     const [ loginRes, setLoginRes ] = useState({})
     const [ createRes, setCreateRes ] = useState({})
     const [ checkSessRes, setCheckSessRes ] = useState({})
@@ -21,6 +22,7 @@ const LogInModal = props => {
     const [ password, setPassword ] = useState('')
     const [ newUser, setNewUser ] = useState('')
     const [ newPass, setNewPass ] = useState('')
+    const [ confirmPass, setConfirmPass ] = useState('')
 
     const [ cookies, setCookie ] = useCookies(['session'])
 
@@ -66,6 +68,7 @@ const LogInModal = props => {
         setPassword('')
         setNewUser('')
         setNewPass('')
+        setConfirmPass('')
     }
 
     const submitLogin = async () => {
@@ -75,10 +78,28 @@ const LogInModal = props => {
     }
 
     const submitCreate = async () => {
-        setPage(2)
-        setIsLoading(true)
-        setCreateRes(await create(newUser, newPass))
+        console.log(verifyNewUser())
+        if (verifyNewUser() === 0) {
+            setPage(2)
+            setIsLoading(true)
+            setCreateRes(await create(newUser, newPass))
+        }
     }
+
+    const verifyNewUser = () => {
+        if (!newUser || !newPass) {
+            return 1
+        }
+        if (newPass != confirmPass) {
+            return 2
+        }
+        if (newPass.length < 7) {
+            return 3
+        }
+        return 0
+    }
+
+    const toggleShowPass = () => { setShowPass(!showPass) }
 
     return (
         <div className='modal-container'>
@@ -99,7 +120,19 @@ const LogInModal = props => {
                                 <label className='modal-label'>username</label>
                                 <input className='modal-input' value={username} onChange={(e) => { setUsername(e.target.value) }} />
                                 <label className='modal-label'>password</label>
-                                <input className='modal-input' value={password} onChange={(e) => { setPassword(e.target.value) }} />
+                                <div style={{display: 'flex'}}>
+                                    <input 
+                                        type={showPass ? ('text') : ('password')}
+                                        style={{width: '100%'}}
+                                        className='modal-input' 
+                                        value={password} 
+                                        onChange={(e) => { setPassword(e.target.value) }} 
+                                    />
+                                    <button
+                                        className='modal-input-button'
+                                        onClick={toggleShowPass}
+                                    >{showPass ? ('hide') : ('show')}</button>
+                                </div>
                                 <div className='modal-button-row'>
                                     <Button execute={clearValues}>Clear</Button>
                                     <Button execute={submitLogin}>Submit</Button>
@@ -117,7 +150,29 @@ const LogInModal = props => {
                                 <label className='modal-label'>username</label>
                                 <input className='modal-input' value={newUser} onChange={(e) => { setNewUser(e.target.value) }} />
                                 <label className='modal-label'>password</label>
-                                <input className='modal-input' value={newPass} onChange={(e) => { setNewPass(e.target.value) }} />
+                                <div style={{display: 'flex'}}>
+                                    <input 
+                                        type={showPass ? ('text') : ('password')}
+                                        style={{width: '100%'}}
+                                        className='modal-input' 
+                                        value={newPass} 
+                                        onChange={(e) => { setNewPass(e.target.value) }} 
+                                    />
+                                    <button
+                                        className='modal-input-button'
+                                        onClick={toggleShowPass}
+                                    >{showPass ? ('hide') : ('show')}</button>
+                                </div>
+                                <label className='modal-label'>confirm password</label>
+                                <div style={{display: 'flex'}}>
+                                    <input 
+                                        type={showPass ? ('text') : ('password')}
+                                        style={{width: '100%'}}
+                                        className='modal-input' 
+                                        value={confirmPass} 
+                                        onChange={(e) => { setConfirmPass(e.target.value) }} 
+                                    />
+                                </div>
                                 <div className='modal-button-row'>
                                     <Button execute={clearValues}>Clear</Button>
                                     <Button execute={submitCreate}>Submit</Button>

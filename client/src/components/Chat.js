@@ -33,6 +33,10 @@ const Chat = (props) => {
         }
     }, [props.user])
 
+    useEffect(() => {
+        autoScroll()
+    }, [chatlog])
+
     const sendMessage = () => {
         if (isWS) {
             chatWS.current.send(JSON.stringify({ 
@@ -45,18 +49,14 @@ const Chat = (props) => {
         }
     }
 
-    /*
     const autoScroll = () => {
         if (chatlog.length > 0) {
             const chatWindow = document.getElementById('chatWindow')
-            console.log('y: ', chatWindow.scrollTop)
-            console.log('check: ', chatWindow.scrollHeight - 152)
-            if (chatWindow.scrollTop > chatWindow.scrollHeight - 152) {
+            if (chatWindow.scrollTop > chatWindow.scrollHeight - 192) {
                 chatWindow.scrollTop = chatWindow.scrollHeight
             }
         }
     }
-    */
 
     const generateChatLog = () => {
         const list = chatlog.map((entry) => {
@@ -73,6 +73,7 @@ const Chat = (props) => {
                 </div>
             )
         })
+        //list.push(<div key={'bottom'} className='chat-message'><span style={{opacity: '0'}}>{'x'}</span></div>)
         return list
     }
 

@@ -18,3 +18,19 @@ hr {
     height: 1px;
 }
 
+::-webkit-scrollbar {
+    height: 12px;
+    width: 8px;
+    background: #110307;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #fceef2;
+    -webkit-border-radius: 4px;
+    -webkit-box-shadow: 0px 0px 32px 8px rgba(252, 238, 242, 0.8);
+}
+
+::-webkit-scrollbar-corner {
+    background: #000;
+}
+
