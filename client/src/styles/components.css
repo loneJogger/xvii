@@ -12,6 +12,11 @@
     text-align: center;
 }
 
+.component-button-row {
+    display: flex;
+    justify-content: space-between;
+}
+
 .icon-info {
     color: #110307;
     font-size: 36px;

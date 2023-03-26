@@ -4,6 +4,7 @@ import { CookiesProvider } from 'react-cookie'
 
 import userContext from './contexts/User'
 import Header from './components/Header'
+import Chat from './components/Chat'
 import Login from './pages/Login'
 import Home from './pages/Home'
 
@@ -30,6 +31,7 @@ const App = () => {
             )} />
           </Switch>
         </Router>
+        <Chat user={user} />
       </CookiesProvider>
     </userContext.Provider> 
   )

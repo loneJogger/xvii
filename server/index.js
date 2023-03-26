@@ -34,9 +34,16 @@ wsServer.on('connection', socket => {
 
     socket.onmessage = ({ data }) => {
         console.log(`from client: ${data}`)
+        const parsed = JSON.parse(data)
         wsServer.clients.forEach((client) => {
-            if (client !== socket && client.readyState === WebSocket.OPEN) {
-                client.send(data)
+            if (client.readyState === WebSocket.OPEN) {
+                const timestamp = new Date().toISOString().replace('T', ' ').substring(0,23)
+                const payload = {
+                    username: parsed.username,
+                    message: parsed.message,
+                    timestamp: timestamp
+                }
+                client.send(JSON.stringify(payload))
             }
         })
     }
