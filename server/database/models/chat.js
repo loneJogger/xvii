@@ -1,26 +1,25 @@
 import { Model, DataTypes } from 'sequelize'
 import db from './db.js'
 
-export class User extends Model {}
+export class ChatMessage extends Model {}
 
-User.init(
+ChatMessage.init(
     {
         id: {
             primaryKey: true,
             type: DataTypes.UUID,
             defaultValue: DataTypes.UUIDV4
         },
-        username: {
+        from: {
             type: DataTypes.STRING,
-            unique: true,
+            allowNull: false
+        },
+        body: {
+            type: DataTypes.STRING,
             allowNull: false,
             validate: {
-                len: [3, 32]
+                len: [1, 200]
             }
-        },
-        password: {
-            type: DataTypes.STRING,
-            allowNull: false,
         },
         createdAt: {
             type: DataTypes.DATE,
@@ -29,12 +28,12 @@ User.init(
         updatedAt: {
             type: DataTypes.DATE,
             defaultValue: DataTypes.NOW
-        }
+        } 
     },
     {
         sequelize: db,
-        tableName: "users",
+        tableName: 'chat_messages',
     }
 )
 
-export default User
+export default ChatMessage

@@ -84,8 +84,7 @@ const LogInModal = props => {
         <div className='modal-container'>
             <div className='modal-header'>
                 <a 
-                    className='icon-info' 
-                    style={{padding: '6px'}}
+                    className='icon-info modal-close' 
                     onClick={() => props.controlIsModal(false)}
                 >✕</a>
             </div>

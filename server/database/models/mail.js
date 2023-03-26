@@ -1,26 +1,41 @@
 import { Model, DataTypes } from 'sequelize'
 import db from './db.js'
 
-export class User extends Model {}
+export class MailMessage extends Model {}
 
-User.init(
+MailMessage.init(
     {
         id: {
             primaryKey: true,
             type: DataTypes.UUID,
             defaultValue: DataTypes.UUIDV4
         },
-        username: {
+        to: {
             type: DataTypes.STRING,
-            unique: true,
+            allowNull: false
+        },
+        from: {
+            type: DataTypes.STRING,
+            allowNull: false
+        },
+        subject: {
+            type: DataTypes.STRING,
             allowNull: false,
             validate: {
-                len: [3, 32]
+                len: [1, 50]
             }
         },
-        password: {
+        body: {
             type: DataTypes.STRING,
             allowNull: false,
+            validate: {
+                len: [1, 2000]
+            }
+        },
+        read: {
+            type: DataTypes.BOOLEAN,
+            allowNull: false,
+            defaultValue: false
         },
         createdAt: {
             type: DataTypes.DATE,
@@ -33,8 +48,8 @@ User.init(
     },
     {
         sequelize: db,
-        tableName: "users",
+        tableName: 'mail_messages',
     }
 )
 
-export default User
+export default MailMessage
