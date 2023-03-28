@@ -1,3 +1,34 @@
+.chat-animated-enter {
+    opacity: 0;
+    transform: translateY(174px);
+}
+
+.chat-animated-enter-active {
+    opacity: 1;
+    transform: translateY(0px);
+    transition: transform 300ms, opacity 300ms;
+}
+
+.chat-animated-exit {
+    opacity: 1;
+    transform: translateY(0px);
+}
+
+.chat-animated-exit-active {
+    opacity: 0;
+    transform: translateY(174px);
+    transition: transform 300ms, opacity 300ms;
+}
+
+.chat-animated-exit-done {
+    opacity: 0;
+    transform: translateY(174px);
+}
+
+.chat-hidden {
+    opacity: 0;
+}
+
 .chat-container {
     position: fixed;
     bottom: 0;

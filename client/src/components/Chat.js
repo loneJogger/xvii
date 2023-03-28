@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from 'react'
+import { CSSTransition } from 'react-transition-group' 
 import '../styles/components.css'
 import '../styles/chat.css'
 
@@ -8,6 +9,7 @@ const Chat = (props) => {
     const [ message, setMessage ] = useState('')
     const [ chatlog, setChatlog ] = useState([])
     const chatWS = useRef(null)
+    const nodeRef = useRef(null)
 
     useEffect(() => {
         if (props.user?.isLogin && "WebSocket" in window) {
@@ -78,35 +80,41 @@ const Chat = (props) => {
     }
 
     return (
-        <div className='chat-container'>
-            {props.user?.isLogin ? (
-                <div className='chat-inner'>
-                    <div id='chatWindow' className='chat-window'>
-                        {generateChatLog()}
-                    </div>
-                    <div className='component-button-row' style={{marginTop: '4px'}}>
-                        <input 
-                            className='chat-input' 
-                            value={message} 
-                            onChange={(e) => {setMessage(e.target.value)}}
-                            onKeyDown={(e) => {
-                                if (e.key === 'Enter') {
-                                    sendMessage()
-                                }
-                            }}
-                        />
-                        <div className='chat-button-outer' onClick={sendMessage}>
-                            <button className='chat-button-inner'>Chat</button>
+        <CSSTransition
+            in={props.user?.isLogin}
+            nodeRef={nodeRef}
+            timeout={300}
+            appear={true}
+            classNames='chat-animated'
+        >
+            <div className='chat-container' ref={nodeRef} style={{ opacity: props.user?.isLogin ? ('1') : ('0') }}>
+                {props.user?.isLogin ? (
+                    <div className='chat-inner'>
+                        <div id='chatWindow' className='chat-window'>
+                            {generateChatLog()}
+                        </div>
+                        <div className='component-button-row' style={{marginTop: '4px'}}>
+                            <input 
+                                className='chat-input' 
+                                value={message} 
+                                onChange={(e) => {setMessage(e.target.value)}}
+                                onKeyDown={(e) => {
+                                    if (e.key === 'Enter') {
+                                        sendMessage()
+                                    }
+                                }}
+                            />
+                            <div className='chat-button-outer' onClick={sendMessage}>
+                                <button className='chat-button-inner'>Chat</button>
+                            </div>
                         </div>
                     </div>
-                </div>
-            ) : (
-                <div className='chat-inner'>
-                    out
-                </div>
-            )}
-            
-        </div>
+                ) : (
+                    <div className='chat-inner'></div>
+                )}
+                
+            </div>
+        </CSSTransition>
     )
 }
 

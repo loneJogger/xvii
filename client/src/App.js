@@ -15,11 +15,12 @@ const App = () => {
   const [ user, setUser ] = useState({ username: '', isLogin: false })
 
   return (
-    <userContext.Provider value={user}>
-      <CookiesProvider>
-        <Header user={user} passUser={setUser}/>
-        <Router>
+    <Router>
+      <userContext.Provider value={user}>
+        <CookiesProvider>
+          <Header user={user} passUser={setUser}/>
           <Switch>
+            <>
             <Route exact path='/' render={() => (
               <>
               {user.isLogin ? (
@@ -29,11 +30,21 @@ const App = () => {
               )}
               </>
             )} />
+            <Route exact path='/profile' render={() => (
+              <>
+              {user.isLogin ? (
+                <div></div>
+              ) : (
+                <Login passUser={setUser} />
+              )}
+              </>
+            )} />
+            </>
           </Switch>
-        </Router>
-        <Chat user={user} />
-      </CookiesProvider>
-    </userContext.Provider> 
+          <Chat user={user} />
+        </CookiesProvider>
+      </userContext.Provider> 
+    </Router>
   )
 }
 

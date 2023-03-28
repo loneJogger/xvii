@@ -21,26 +21,39 @@
 ## to do:
 
 ### soon:
-- modal css
+- [ ] login/create modal
     - input validation and errors displayed in modal
-    - make keyboard navigible (close button, a tags, more visibly selected)                
-    - transition?
-- build notification component
-- retouch button (convert to css, remove component)
+    - make keyboard navigible (close button, a tags, more visibly selected) 
+    - remove button component, remake using css
+
+- [ ] inbox page
+    - first draft design messages table
+    - first draft design write message window
+    - add game_id to schema
+    - add game_secret to schema
+
+- [ ] home page
+    - put something on the home page temporarily
+
+- [ ] profile page
+    - put something on the profile page temporarily
+
+- [ ] server logging
+    - incorporate log service on ws and errors
+    - remove console logs from client
+
+- [ ] env vars
+    - remove all references to keys, urls, db strings from server and client
+    - add all needed env vars in README as to help construct .bashrc or .zshrc file
+
+- [ ] deployment stack
+    - alter client Dockerfile to build and serve client
+    - tie client and server together behind nginx
 
 ### eventually:
-- add responsiveness to: logInModal, Header
-- design inbox component
-- add client build to docker stack
-
-### for initial release:
-    - [ ] finish login/create modal
-    - [ ] finish mail: inbox page, send modal
-    - [x] finish main chat
-    - [ ] finish temp home page
-    - [ ] incorporate server logging more thoroughly
-    - [ ] env var setup for deployment
-    - [ ] docker stack: db, server, client (w/ build)
+- notification component
+- canvas game, with controls on focus
+- ws for game state, and player input
 
 ## Notes:
 
