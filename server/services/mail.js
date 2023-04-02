@@ -1,5 +1,5 @@
 import { Op } from 'sequelize'
-import MailMessage from '../database/models/mail'
+import MailMessage from '../database/models/mail.js'
 
 const create = async (to, from, subject, body) => {
     try {

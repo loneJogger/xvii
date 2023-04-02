@@ -17,7 +17,7 @@ const entry = (message, level, body) => {
         }
     }
 
-    if (process.env.ENVIRONMENT === 'dev_local') {
+    if (process.env.ENVIRONMENT === 'local') {
         console.log(out)
     }
 

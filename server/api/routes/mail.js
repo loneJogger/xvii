@@ -91,4 +91,4 @@ mailRouter.put('/:id', async (req, res, next) => {
     next()
 })
 
-
+export default mailRouter

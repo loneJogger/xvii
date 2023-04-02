@@ -25,6 +25,12 @@ const Header = (props) => {
             <p className='component-text' style={{whiteSpace: 'nowrap'}}>_~\| XVII |/~_</p>
             <div className='header-icon-row'>
                 <h2 className='component-title' style={{margin: '0px 8px'}}><Link to={'/profile'}>{props.user.username}</Link></h2>
+                {props.user?.isLogin && (
+                    <div className='component-text' style={{display: 'flex'}}>
+                        <p className='component-title' style={{fontSize: '40px', lineHeight: '4px'}}>1</p>
+                        <Link className='icon-info' to={'/inbox'} style={{fontSize: '64px', lineHeight: '12px'}}>✉</Link>
+                    </div>
+                )}
                 <a 
                     className='icon-info'
                     style={{margin: '2px 4px'}} 

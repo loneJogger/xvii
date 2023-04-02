@@ -2,6 +2,20 @@
 
 ---
 
+## deployment:
+
+### env vars:
+
+- `ENVIRONMENT` - deployment environment
+- `POSTGRES_USER` - name of the db user
+- `POSTGRES_DB` - name of the database
+- `POSTGRES_PASSWORD` - password of the db user
+- `SESSION_JWT_SECRET` - secret for reading json web tokens
+- `REACT_APP_API_URL` - url for the server's http api used within the client
+- `REACT_APP_CHAT_WS_URL` - url for the server's chat ws used within the client
+
+---
+
 ## History:
 
 - 02.25.2023: intialized repo
@@ -15,6 +29,8 @@
 - 03.20.2023: added chat and mail models, added text file download to info button, added mail api
 - 03.25.2023: added chatroom with web socket server
 - 03.26.2023: fixed conditional autoscroll on chat, added show/hide on pass inputs
+- 03.27.2023: minor improvements to chat and header
+- 04.02.2023: fixed cleanup on chat ws, started inbox component, moved all env vars to .zshrc file, removed hardcoded urls from client 
 
 ---
 
@@ -42,10 +58,6 @@
     - incorporate log service on ws and errors
     - remove console logs from client
 
-- [ ] env vars
-    - remove all references to keys, urls, db strings from server and client
-    - add all needed env vars in README as to help construct .bashrc or .zshrc file
-
 - [ ] deployment stack
     - alter client Dockerfile to build and serve client
     - tie client and server together behind nginx
@@ -59,7 +71,10 @@
 
 ### Colors:  
 
-#fceef2, #110307, #eab4d5, #86284f, #e6ebd3, #04a777
+#fceef2, #110307, #eab4d5, #86284f, 
+#e6ebd3, #04a777, #675750, #5A301C
+#1768ac, #044389
+
 
 ### Symbols: 
 

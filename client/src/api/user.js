@@ -7,7 +7,7 @@ const login = async (username, password) => {
     try {
         const res = await axios({
             method: 'POST',
-            url: 'http://localhost:5000/user/login',
+            url: `${process.env.REACT_APP_API_URL}/user/login`,
             data: {
                 username,
                 password 
@@ -28,7 +28,7 @@ const create = async (username, password) => {
     try {
         const res = await axios({
             method: 'POST',
-            url: 'http://localhost:5000/user',
+            url: `${process.env.REACT_APP_API_URL}/user`,
             data: {
                 username,
                 password
@@ -46,7 +46,7 @@ const checkSession = async (session) => {
     try {
         const res = await axios({
             method: 'GET',
-            url: 'http://localhost:5000/user/session',
+            url: `${process.env.REACT_APP_API_URL}/user/session`,
             headers: {
                 'Authorization': session
             }

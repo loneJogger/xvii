@@ -14,8 +14,7 @@ const Chat = (props) => {
     useEffect(() => {
         if (props.user?.isLogin && "WebSocket" in window) {
             setIsWS(true)
-            try {
-                chatWS.current = new WebSocket('ws://localhost:5001')
+            chatWS.current = new WebSocket(process.env.REACT_APP_CHAT_WS_URL)
                 chatWS.current.onopen = () => {
                     console.log('connected to ws server')
                 }
@@ -27,17 +26,26 @@ const Chat = (props) => {
                     chatWS.current = null
                     console.log('connection to ws server closed')
                 }
-            } catch (e) {
-                console.log(e)
-            }
         } else {
             setIsWS(false)
         }
+        return () => {
+            if (props.user?.isLogin && chatWS.current !== null) {
+                chatWS.current.close()
+            }
+        }
     }, [props.user])
 
-    useEffect(() => {
-        autoScroll()
-    }, [chatlog])
+    const autoScroll = () => {
+        if (chatlog.length > 0) {
+            const chatWindow = document.getElementById('chatWindow')
+            if (chatWindow.scrollTop > chatWindow.scrollHeight - 192) {
+                chatWindow.scrollTop = chatWindow.scrollHeight
+            }
+        }
+    }
+
+    useEffect(autoScroll, [chatlog])
 
     const sendMessage = () => {
         if (isWS) {
@@ -48,15 +56,6 @@ const Chat = (props) => {
             setMessage('')
         } else {
             console.log('no ws connection')
-        }
-    }
-
-    const autoScroll = () => {
-        if (chatlog.length > 0) {
-            const chatWindow = document.getElementById('chatWindow')
-            if (chatWindow.scrollTop > chatWindow.scrollHeight - 192) {
-                chatWindow.scrollTop = chatWindow.scrollHeight
-            }
         }
     }
 
@@ -75,7 +74,6 @@ const Chat = (props) => {
                 </div>
             )
         })
-        //list.push(<div key={'bottom'} className='chat-message'><span style={{opacity: '0'}}>{'x'}</span></div>)
         return list
     }
 

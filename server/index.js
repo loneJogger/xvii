@@ -8,6 +8,7 @@ import logger from './services/log.js'
 
 // routes
 import userRouter from './api/routes/user.js'
+import mailRouter from './api/routes/mail.js'
 
 // websockets
 import chatWS from './api/websockets/chat.js'
@@ -20,6 +21,7 @@ const app = express()
 app.use(cors())
 app.use(bodyParser.json())
 app.use('/user', userRouter)
+app.use('/mail', mailRouter)
 
 logger.entry('new uptime session', 'start')
 
