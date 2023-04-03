@@ -55,7 +55,6 @@
     - put something on the profile page temporarily
 
 - [ ] server logging
-    - incorporate log service on ws and errors
     - remove console logs from client
 
 - [ ] deployment stack

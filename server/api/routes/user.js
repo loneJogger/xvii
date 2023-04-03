@@ -2,6 +2,7 @@ import express from "express"
 import userServices from '../../services/user.js'
 import log from '../middleware/log.js'
 import auth from '../middleware/auth.js'
+import logService from '../../services/log.js'
 
 const userRouter = express.Router()
 userRouter.use(log)
@@ -19,12 +20,14 @@ userRouter.post('/', async (req, res, next) => {
     } else {
         try {
             const newUser = await userServices.userCreate(username, password)
+            logService.entry('new user created.', 'info', { username })
             res.status(200).send({
                 type: 'success',
                 message: 'new user created.',
                 user: newUser
             })
         } catch (e) {
+            logService.entry(e.message, 'error', e)
             res.status(400).send(e)
         }
     }
@@ -44,12 +47,14 @@ userRouter.post('/login', async (req, res, next) => {
     } else {
         try {
             const session = await userServices.userLogin(username, password)
+            logService.entry('user logged in, session created.', 'info', { username })
             res.status(200).send({
                 type: 'success',
                 message: 'user logged in, session created.',
                 session
             })
         } catch (e) {
+            logService.entry(e.message, 'error', e)
             res.status(401).send(e)
         }
     }
@@ -62,6 +67,11 @@ userRouter.post('/login', async (req, res, next) => {
 userRouter.get('/session', auth.verifyUserSession, async (req, res, next) => {
     const { session } = userServices.checkAuthToken(req.headers['authorization'])
     const user = await userServices.getUserFromUsername(session.username)
+    logService.entry(
+        'session is valid, user automatically logged in.',
+        'info', 
+        { id: user.id, username: user.username, updatedAt: user.updatedAt }
+    )
     res.status(200).send({
         type: 'success',
         message: 'session is valid, user automatically logged in.',
