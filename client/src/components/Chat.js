@@ -15,16 +15,15 @@ const Chat = (props) => {
         if (props.user?.isLogin && "WebSocket" in window) {
             setIsWS(true)
             chatWS.current = new WebSocket(process.env.REACT_APP_CHAT_WS_URL)
-                chatWS.current.onopen = () => {
-                    console.log('connected to ws server')
-                }
+                /*
+                // currently nothing happens on ws open, but could be useful eventually
+                chatWS.current.onopen = () => {}
+                */
                 chatWS.current.onmessage = (data) => {
-                    console.log('message coming in!')
                     setChatlog(chatlog => [ ...chatlog, data ])
                 }
                 chatWS.current.onclose = () => {
                     chatWS.current = null
-                    console.log('connection to ws server closed')
                 }
         } else {
             setIsWS(false)

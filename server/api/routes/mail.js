@@ -13,8 +13,9 @@ mailRouter.use(auth.verifyUserSession)
  */
 mailRouter.post('/', async (req, res, next) => {
     const { to, subject, body } = req.body
+    let errorStatus = 400
     if ( !to || !subject || !body ) {
-        res.status(400).send({
+        res.status(errorStatus).send({
             type: 'invalidBody',
             message: 'invalid body: a new mail message must contain a username, a subject, and a body.' 
         })
@@ -22,14 +23,22 @@ mailRouter.post('/', async (req, res, next) => {
         try {
             const { session } = userServices.checkAuthToken(req.headers['authorization'])
             const user = await userServices.getUserFromUsername(session.username)
-            const newMail = mailServices.create(to, user.id,  subject, body)
+            const to_user = await userServices.getUserFromUsername(to)
+            if (to_user === null) {
+                errorStatus = 404
+                throw {
+                    type: 'noUserFound',
+                    message: 'not found: no user found with this username.'
+                }
+            }
+            const newMail = mailServices.create(to_user.id, user.id,  subject, body)
             res.status(200).send({
                 type: 'success',
                 message: 'mail message sent',
                 user: newMail
             })
         } catch (e) {
-            res.status(400).send(e)
+            res.status(errorStatus).send(e)
         }
     }
     next()
@@ -81,6 +90,12 @@ mailRouter.put('/:id', async (req, res, next) => {
         const { session } = userServices.checkAuthToken(req.headers['authorization'])
         const user = await userServices.getUserFromUsername(session.username)
         const read = await mailServices.markRead(user.id, req.params.id)
+        if (read[0] === 0) {
+            throw {
+                type: 'invalidUser',
+                message: 'invalid user: only the recipient of a mail messsage may mark it read'
+            }
+        }
         res.status(200).send({
             type: 'success',
             message: `${read} message was set to read` 

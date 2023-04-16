@@ -87,5 +87,6 @@ const markRead = async (userId, messageId) => {
 export default {
     create,
     getInbox,
-    getSent
+    getSent,
+    markRead
 }

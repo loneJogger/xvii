@@ -78,7 +78,6 @@ const LogInModal = props => {
     }
 
     const submitCreate = async () => {
-        console.log(verifyNewUser())
         if (verifyNewUser() === 0) {
             setPage(2)
             setIsLoading(true)

@@ -30,7 +30,9 @@
 - 03.25.2023: added chatroom with web socket server
 - 03.26.2023: fixed conditional autoscroll on chat, added show/hide on pass inputs
 - 03.27.2023: minor improvements to chat and header
-- 04.02.2023: fixed cleanup on chat ws, started inbox component, moved all env vars to .zshrc file, removed hardcoded urls from client 
+- 04.02.2023: fixed cleanup on chat ws, started inbox component, moved all env vars to .zshrc file, removed hardcoded urls from client
+- 04.15.2023: removed console.log from server logs, removed client non-error console logs
+- 04.16.2023: fixed sequelize migration config file, tested mail api and added errors for bad requests,
 
 ---
 
@@ -53,9 +55,6 @@
 
 - [ ] profile page
     - put something on the profile page temporarily
-
-- [ ] server logging
-    - remove console logs from client
 
 - [ ] deployment stack
     - alter client Dockerfile to build and serve client

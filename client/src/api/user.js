@@ -53,7 +53,6 @@ const checkSession = async (session) => {
         })
         return res.data
     } catch (e) {
-        console.log(e)
         const res = e.response.data
         console.log(res)
         return res

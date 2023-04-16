@@ -24,6 +24,10 @@ module.exports = {
         allowNull: false,
         type: Sequelize.STRING
       },
+      game_id: {
+        allowNull: true,
+        type: Sequelize.UUID
+      },
       read: {
         allowNull: false,
         type: Sequelize.BOOLEAN,

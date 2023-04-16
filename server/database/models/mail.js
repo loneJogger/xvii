@@ -32,6 +32,10 @@ MailMessage.init(
                 len: [1, 2000]
             }
         },
+        game_id: {
+            type: DataTypes.UUID,
+            allowNull: true
+        },
         read: {
             type: DataTypes.BOOLEAN,
             allowNull: false,
