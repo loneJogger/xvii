@@ -31,11 +31,11 @@ mailRouter.post('/', async (req, res, next) => {
                     message: 'not found: no user found with this username.'
                 }
             }
-            const newMail = mailServices.create(to_user.id, user.id,  subject, body)
+            const newMail = await mailServices.create(to_user.id, user.id,  subject, body)
             res.status(200).send({
                 type: 'success',
                 message: 'mail message sent',
-                user: newMail
+                newMessage: newMail
             })
         } catch (e) {
             res.status(errorStatus).send(e)

@@ -9,11 +9,7 @@ const create = async (to, from, subject, body) => {
             subject,
             body
         })
-        return {
-            id: newMail.id,
-            to: newMail.to,
-            subject: newMail.subject
-        }
+        return newMail
     } catch (e) {
         throw {
             type: 'databaseError',

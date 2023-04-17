@@ -32,7 +32,7 @@
 - 03.27.2023: minor improvements to chat and header
 - 04.02.2023: fixed cleanup on chat ws, started inbox component, moved all env vars to .zshrc file, removed hardcoded urls from client
 - 04.15.2023: removed console.log from server logs, removed client non-error console logs
-- 04.16.2023: fixed sequelize migration config file, tested mail api and added errors for bad requests,
+- 04.16.2023: fixed sequelize migration config file, tested mail api and added errors for bad requests, began work on inbox page
 
 ---
 
@@ -45,10 +45,10 @@
     - remove button component, remake using css
 
 - [ ] inbox page
+    - create db relations between mail_messages and users
+    - add delete endpoint to mail_messages
     - first draft design messages table
     - first draft design write message window
-    - add game_id to schema
-    - add game_secret to schema
 
 - [ ] home page
     - put something on the home page temporarily

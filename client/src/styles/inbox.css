@@ -1,0 +1,13 @@
+.inbox-container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    z-index: 15;
+}
+
+.inbox-header {
+    display: flex;
+    background-color: #86284f;
+    z-index: 16;
+    box-shadow: 0px -4px 12px 1px rgba(134, 40, 79, 0.8);
+}

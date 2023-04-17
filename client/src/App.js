@@ -5,8 +5,10 @@ import { CookiesProvider } from 'react-cookie'
 import userContext from './contexts/User'
 import Header from './components/Header'
 import Chat from './components/Chat'
+
 import Login from './pages/Login'
 import Home from './pages/Home'
+import Inbox from './pages/Inbox'
 
 import './styles/main.css'
 
@@ -33,7 +35,16 @@ const App = () => {
             <Route exact path='/profile' render={() => (
               <>
               {user.isLogin ? (
-                <div></div>
+                <div>profile</div>
+              ) : (
+                <Login passUser={setUser} />
+              )}
+              </>
+            )} />
+            <Route exact path='/inbox' render={() => (
+              <>
+              {user.isLogin ? (
+                <Inbox />
               ) : (
                 <Login passUser={setUser} />
               )}

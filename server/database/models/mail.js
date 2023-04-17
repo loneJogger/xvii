@@ -11,11 +11,11 @@ MailMessage.init(
             defaultValue: DataTypes.UUIDV4
         },
         to: {
-            type: DataTypes.STRING,
+            type: DataTypes.UUID,
             allowNull: false
         },
         from: {
-            type: DataTypes.STRING,
+            type: DataTypes.UUID,
             allowNull: false
         },
         subject: {
@@ -26,7 +26,7 @@ MailMessage.init(
             }
         },
         body: {
-            type: DataTypes.STRING,
+            type: DataTypes.TEXT,
             allowNull: false,
             validate: {
                 len: [1, 2000]
@@ -34,6 +34,10 @@ MailMessage.init(
         },
         game_id: {
             type: DataTypes.UUID,
+            allowNull: true
+        },
+        game_secret: {
+            type: DataTypes.STRING,
             allowNull: true
         },
         read: {
