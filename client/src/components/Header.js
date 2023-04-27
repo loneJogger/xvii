@@ -22,7 +22,7 @@ const Header = (props) => {
                     download='info.txt'
                 >★</a>
             </div>
-            <p className='component-text' style={{whiteSpace: 'nowrap'}}>_~\| XVII |/~_</p>
+            <p className='component-text' style={{whiteSpace: 'nowrap'}}>_~\| CROCUS |/~_</p>
             <div className='header-icon-row'>
                 <h2 className='component-title' style={{margin: '0px 8px'}}>
                     <Link to={'/profile'}>{props.user.username}</Link>

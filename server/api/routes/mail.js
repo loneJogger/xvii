@@ -93,7 +93,7 @@ mailRouter.put('/:id', async (req, res, next) => {
         if (read[0] === 0) {
             throw {
                 type: 'invalidUser',
-                message: 'invalid user: only the recipient of a mail messsage may mark it read'
+                message: 'invalid user: only the recipient of a mail messsage may mark it read.'
             }
         }
         res.status(200).send({
@@ -102,6 +102,37 @@ mailRouter.put('/:id', async (req, res, next) => {
         })
     } catch (e) {
         res.status(400).send(e)
+    }
+    next()
+})
+
+mailRouter.delete('/:id', async (req, res, next) => {
+    let errorStatus = 400
+    try {
+        const { session } = userServices.checkAuthToken(req.headers['authorization'])
+        const user = await userServices.getUserFromUsername(session.username)
+        const entry = await mailServices.view(req.params.id)
+        if (!entry) {
+            errorStatus = 404
+            throw {
+                type: 'noMailMessageFound',
+                message: 'not found: no mail message found with this id.'
+            }
+        }
+        if (user.id !== entry.to) {
+            errorStatus = 403
+            throw {
+                type: 'invalidUser',
+                message: 'invalid user: only the recipient of a mail messsage may delete it.'
+            }
+        }
+        await mailServices.destroy(req.params.id)
+        res.status(200).send({
+            type: 'success',
+            message: `mail message ${req.params.id} has been deleted`
+        })
+    } catch (e) {
+        res.status(errorStatus).send(e)
     }
     next()
 })

@@ -19,7 +19,7 @@ const Login = (props) => {
                 </div>
             )}
             <div className='page-body'>
-                <h1 className='page-title'>welcome to xvii</h1>
+                <h1 className='page-title'>welcome to crocus</h1>
                 <p className='page-title'>please log in, or create an account.</p>
                 <div style={{textAlign: 'center'}}>
                     <div className='button-outer'>
