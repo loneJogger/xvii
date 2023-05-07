@@ -26,9 +26,14 @@
 
 .inbox-table {
     color: #fceef2;
-    background-color: #110307;
     font-family: 'Anon';
     width: 100%;
+}
+
+.inbox-table-container {
+    background-color: #110307;
+    height: 256px;
+    overflow-y: scroll;
 }
 
 .inbox-table-header {
@@ -40,7 +45,19 @@
     border: none;
 }
 
+.inbox-table-row {
+    line-height: 32px;
+}
+
 .inbox-table-row:hover {
     background-color: #86284f;
     cursor: pointer;
+}
+
+.selected-container {
+    height: 320px;
+    background-color: #110307;
+    color: #fceef2;
+    font-family: 'Anon';
+    overflow-y: scroll;
 }

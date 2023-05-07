@@ -35,6 +35,7 @@
 - 04.16.2023: fixed sequelize migration config file, tested mail api and added errors for bad requests, began work on inbox page
 - 04.26.2023: changed page name, started inbox table
 - 04.27.2023: continued work on inbox table, setup associations between mail and users, added delete endpoint
+- 05.06.2023: started design of game component.
 
 ---
 
@@ -49,6 +50,7 @@
 - [ ] inbox page
     - first draft design messages table
     - first draft design write message window
+    - figure out how to pass line breaks in stored and displayed text
 
 - [ ] home page
     - put something on the home page temporarily
@@ -59,6 +61,10 @@
 - [ ] deployment stack
     - alter client Dockerfile to build and serve client
     - tie client and server together behind nginx
+
+- [ ] window size
+    - add window size hook
+    - use hook to calculate ui conponent height 
 
 ### eventually:
 - notification component

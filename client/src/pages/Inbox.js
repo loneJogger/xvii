@@ -140,6 +140,24 @@ const Inbox = () => {
             </div>
         )
     }
+
+    const generateSelected = () => {
+        if (selectedMessage.id !== '') {
+            return (
+                <div>
+                    <div style={{display: 'flex'}}>
+                        <p style={{margin: '8px'}}>{selectedMessage.fromUser ? `FROM: ${selectedMessage.fromUser.username}` : `TO :${selectedMessage.toUser.username}`}</p>
+                        <p style={{margin: '8px'}}>{`SUBJECT: ${selectedMessage.subject}`}</p>
+                        <p style={{margin: '8px'}}>{selectedMessage.createdAt.replace('T', ' ').substring(0,19)}</p>
+                    </div>
+                    <p style={{margin: '8px'}}>{selectedMessage.body}</p>
+                </div>
+            )
+        } else {
+            return null
+        }
+    }
+
     return (
         <div className='page-body'>
             <div className='inbox-container'>
@@ -159,12 +177,16 @@ const Inbox = () => {
                             </div>
                         </div>
                         <hr className='modal-rule'/>
-                        <div>
+                        <div className='inbox-table-container'>
                             {toggle === 'inbox' ? (
                                 <>{generateInbox()}</>
                             ) : (
                                 <>{generateSent()}</>
                             )}
+                        </div>
+                        <hr className='modal-rule'/>
+                        <div className='selected-container'>
+                            <>{generateSelected()}</>
                         </div>
                     </div>
                 </div>
