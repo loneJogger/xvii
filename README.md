@@ -51,6 +51,7 @@
     - first draft design messages table
     - first draft design write message window
     - figure out how to pass line breaks in stored and displayed text
+    - fix selected display
 
 - [ ] home page
     - put something on the home page temporarily

@@ -57,7 +57,8 @@ const getInbox = async (id) => {
                 to: { [Op.eq]: id }
             },
             include: [
-                {model: User, as: 'fromUser', attributes: ['username']}
+                {model: User, as: 'fromUser', attributes: ['username']},
+                {model: User, as: 'toUser', attributes: ['username']}
             ]
         })
         return messages
@@ -77,7 +78,8 @@ const getSent = async (id) => {
                 from: { [Op.eq]: id }
             },
             include: [
-                {model: User, as: 'toUser', attributes: ['username']}
+                {model: User, as: 'toUser', attributes: ['username']},
+                {model: User, as: 'fromUser', attributes: ['username']}
             ]
         })
         return messages
