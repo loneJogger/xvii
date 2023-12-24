@@ -89,7 +89,7 @@ const LogInModal = props => {
         if (!newUser || !newPass) {
             return 1
         }
-        if (newPass != confirmPass) {
+        if (newPass !== confirmPass) {
             return 2
         }
         if (newPass.length < 7) {
