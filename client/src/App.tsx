@@ -9,6 +9,7 @@ import Chat from './components/Chat'
 import Login from './pages/Login'
 import Home from './pages/Home'
 import Inbox from './pages/Inbox'
+import Test from './pages/Test'
 
 import './styles/main.css'
 
@@ -49,6 +50,9 @@ const App = () => {
                 <Login passUser={setUser} />
               )}
               </>
+            )} />
+            <Route exact path='/test' render={() => (
+              <Test />
             )} />
             </>
           </Switch>
