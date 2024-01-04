@@ -1,6 +1,5 @@
 import { useState } from 'react'
-import HWGame from '../components/phaser/HelloWorld'
-import Tu1Game from '../components/phaser/Tutorial1'
+import { NestedMenuPhaser } from '../components/phaser'
 
 const Test = () => {
 
@@ -12,16 +11,13 @@ const Test = () => {
             <div>
                 <select onChange={(e) => setCurrentPhaser(e.target.value)}>
                     <option value={'none'}>none</option>
-                    <option value={'hwGame'}>hello world</option>
-                    <option value={'tu1Game'}>tutorial 1</option>
+                    <option value={'nestedMenu'}>a title screen with a main menu</option>
                 </select>
             </div>
             <div>
-                {(currentPhaser === 'hwGame') && (
-                    <HWGame />
-                )}
-                {(currentPhaser === 'tu1Game') && (
-                    <Tu1Game />
+
+                {(currentPhaser === 'nestedMenu') && (
+                    <NestedMenuPhaser />
                 )}
             </div>
         </div>
