@@ -1,5 +1,7 @@
 import { Op } from 'sequelize'
-import MailMessage from '../database/models/mail'
+import Models from '../database/models/index.js'
+
+const { MailMessage, User } = Models
 
 const create = async (to, from, subject, body) => {
     try {
@@ -9,11 +11,36 @@ const create = async (to, from, subject, body) => {
             subject,
             body
         })
-        return {
-            id: newMail.id,
-            to: newMail.to,
-            subject: newMail.subject
+        return newMail
+    } catch (e) {
+        throw {
+            type: 'databaseError',
+            message: 'an error from the database occured',
+            error: e
         }
+    }
+}
+
+const destroy = async (id) => {
+    try {
+        const deleted = await MailMessage.destroy({
+            where: {
+                id: { [Op.eq]: id }
+            }
+        })
+        return deleted
+    } catch (e) {
+        throw {
+            type: 'databaseError',
+            message: 'an error from the database occured',
+            error: e
+        }
+    }
+}
+
+const view = async (id) => {
+    try {
+        return await MailMessage.findByPk(id)
     } catch (e) {
         throw {
             type: 'databaseError',
@@ -28,7 +55,11 @@ const getInbox = async (id) => {
         const messages = await MailMessage.findAll({
             where: {
                 to: { [Op.eq]: id }
-            }
+            },
+            include: [
+                {model: User, as: 'fromUser', attributes: ['username']},
+                {model: User, as: 'toUser', attributes: ['username']}
+            ]
         })
         return messages
     } catch (e) {
@@ -45,7 +76,11 @@ const getSent = async (id) => {
         const messages = await MailMessage.findAll({
             where: {
                 from: { [Op.eq]: id }
-            }
+            },
+            include: [
+                {model: User, as: 'toUser', attributes: ['username']},
+                {model: User, as: 'fromUser', attributes: ['username']}
+            ]
         })
         return messages
     } catch (e) {
@@ -86,6 +121,9 @@ const markRead = async (userId, messageId) => {
 
 export default {
     create,
+    destroy,
+    view,
     getInbox,
-    getSent
+    getSent,
+    markRead,
 }

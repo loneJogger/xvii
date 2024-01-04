@@ -78,7 +78,6 @@ const LogInModal = props => {
     }
 
     const submitCreate = async () => {
-        console.log(verifyNewUser())
         if (verifyNewUser() === 0) {
             setPage(2)
             setIsLoading(true)
@@ -90,7 +89,7 @@ const LogInModal = props => {
         if (!newUser || !newPass) {
             return 1
         }
-        if (newPass != confirmPass) {
+        if (newPass !== confirmPass) {
             return 2
         }
         if (newPass.length < 7) {

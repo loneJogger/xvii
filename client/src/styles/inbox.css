@@ -1,0 +1,63 @@
+.inbox-container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    z-index: 15;
+}
+
+.inbox-header {
+    display: flex;
+    background-color: #86284f;
+    z-index: 16;
+    box-shadow: 0px -4px 12px 1px rgba(134, 40, 79, 0.8);
+    justify-content: space-between;
+}
+
+.inbox-input {
+    width: 100%;
+    margin-right: 8px;
+    margin-left: 128px;
+    padding: 4px;
+    border: none;
+    color: #fceef2;
+    background-color: #110307;
+    font-family: 'Anon';
+}
+
+.inbox-table {
+    color: #fceef2;
+    font-family: 'Anon';
+    width: 100%;
+}
+
+.inbox-table-container {
+    background-color: #110307;
+    height: 256px;
+    overflow-y: scroll;
+}
+
+.inbox-table-header {
+    border-bottom: 2px solid #fceef2;
+}
+
+.inbox-table td {
+    text-align: center;
+    border: none;
+}
+
+.inbox-table-row {
+    line-height: 32px;
+}
+
+.inbox-table-row:hover {
+    background-color: #86284f;
+    cursor: pointer;
+}
+
+.selected-container {
+    height: 320px;
+    background-color: #110307;
+    color: #fceef2;
+    font-family: 'Anon';
+    overflow-y: scroll;
+}

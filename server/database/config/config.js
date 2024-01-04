@@ -2,12 +2,12 @@ import dotenv from 'dotenv'
 dotenv.config()
 
 const development = {
-    url: process.env.DB_CONNECT_DEV,
+    url: `postgres://${process.env.POSTGRES_USER}:${process.env.POSTGRES_PASSWORD}@localhost:5432/${process.env.POSTGRES_DB}`,
     dialect: 'postgres',
 }
 
 const production = {
-    url: process.env.DB_CONNECT_PROD,
+    url: `postgres://${process.env.POSTGRES_USER}:${process.env.POSTGRES_PASSWORD}@localhost:5432/${process.env.POSTGRES_DB}`,
     dialect: 'postgres',
 }
 

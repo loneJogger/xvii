@@ -1,4 +1,5 @@
 import userServices from '../../services/user.js'
+import log from '../../services/log.js'
 
 const verifyUserSession = (req, res, next) => {
     const token = req.headers['authorization']
@@ -19,6 +20,7 @@ const verifyUserSession = (req, res, next) => {
                 next()
             }
         } catch (e) {
+            log.entry(e.message, 'error', e)
             res.status(400).send({
                 type: 'authError',
                 message: 'an authentication error occured.',

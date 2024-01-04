@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from 'react'
+import { CSSTransition } from 'react-transition-group' 
 import '../styles/components.css'
 import '../styles/chat.css'
 
@@ -8,34 +9,42 @@ const Chat = (props) => {
     const [ message, setMessage ] = useState('')
     const [ chatlog, setChatlog ] = useState([])
     const chatWS = useRef(null)
+    const nodeRef = useRef(null)
 
     useEffect(() => {
         if (props.user?.isLogin && "WebSocket" in window) {
             setIsWS(true)
-            try {
-                chatWS.current = new WebSocket('ws://localhost:5001')
-                chatWS.current.onopen = () => {
-                    console.log('connected to ws server')
-                }
+            chatWS.current = new WebSocket(process.env.REACT_APP_CHAT_WS_URL)
+                /*
+                // currently nothing happens on ws open, but could be useful eventually
+                chatWS.current.onopen = () => {}
+                */
                 chatWS.current.onmessage = (data) => {
-                    console.log('message coming in!')
                     setChatlog(chatlog => [ ...chatlog, data ])
                 }
                 chatWS.current.onclose = () => {
                     chatWS.current = null
-                    console.log('connection to ws server closed')
                 }
-            } catch (e) {
-                console.log(e)
-            }
         } else {
             setIsWS(false)
         }
+        return () => {
+            if (props.user?.isLogin && chatWS.current !== null) {
+                chatWS.current.close()
+            }
+        }
     }, [props.user])
 
-    useEffect(() => {
-        autoScroll()
-    }, [chatlog])
+    const autoScroll = () => {
+        if (chatlog.length > 0) {
+            const chatWindow = document.getElementById('chatWindow')
+            if (chatWindow.scrollTop > chatWindow.scrollHeight - 192) {
+                chatWindow.scrollTop = chatWindow.scrollHeight
+            }
+        }
+    }
+
+    useEffect(autoScroll, [chatlog])
 
     const sendMessage = () => {
         if (isWS) {
@@ -46,15 +55,6 @@ const Chat = (props) => {
             setMessage('')
         } else {
             console.log('no ws connection')
-        }
-    }
-
-    const autoScroll = () => {
-        if (chatlog.length > 0) {
-            const chatWindow = document.getElementById('chatWindow')
-            if (chatWindow.scrollTop > chatWindow.scrollHeight - 192) {
-                chatWindow.scrollTop = chatWindow.scrollHeight
-            }
         }
     }
 
@@ -73,40 +73,45 @@ const Chat = (props) => {
                 </div>
             )
         })
-        //list.push(<div key={'bottom'} className='chat-message'><span style={{opacity: '0'}}>{'x'}</span></div>)
         return list
     }
 
     return (
-        <div className='chat-container'>
-            {props.user?.isLogin ? (
-                <div className='chat-inner'>
-                    <div id='chatWindow' className='chat-window'>
-                        {generateChatLog()}
-                    </div>
-                    <div className='component-button-row' style={{marginTop: '4px'}}>
-                        <input 
-                            className='chat-input' 
-                            value={message} 
-                            onChange={(e) => {setMessage(e.target.value)}}
-                            onKeyDown={(e) => {
-                                if (e.key === 'Enter') {
-                                    sendMessage()
-                                }
-                            }}
-                        />
-                        <div className='chat-button-outer' onClick={sendMessage}>
-                            <button className='chat-button-inner'>Chat</button>
+        <CSSTransition
+            in={props.user?.isLogin}
+            nodeRef={nodeRef}
+            timeout={300}
+            appear={true}
+            classNames='chat-animated'
+        >
+            <div className='chat-container' ref={nodeRef} style={{ opacity: props.user?.isLogin ? ('1') : ('0') }}>
+                {props.user?.isLogin ? (
+                    <div className='chat-inner'>
+                        <div id='chatWindow' className='chat-window'>
+                            {generateChatLog()}
+                        </div>
+                        <div className='component-button-row' style={{marginTop: '4px'}}>
+                            <input 
+                                className='chat-input' 
+                                value={message} 
+                                onChange={(e) => {setMessage(e.target.value)}}
+                                onKeyDown={(e) => {
+                                    if (e.key === 'Enter') {
+                                        sendMessage()
+                                    }
+                                }}
+                            />
+                            <div className='chat-button-outer' onClick={sendMessage}>
+                                <button className='chat-button-inner'>Chat</button>
+                            </div>
                         </div>
                     </div>
-                </div>
-            ) : (
-                <div className='chat-inner'>
-                    out
-                </div>
-            )}
-            
-        </div>
+                ) : (
+                    <div className='chat-inner'></div>
+                )}
+                
+            </div>
+        </CSSTransition>
     )
 }
 

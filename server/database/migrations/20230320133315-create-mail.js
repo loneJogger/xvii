@@ -10,11 +10,11 @@ module.exports = {
       },
       to: {
         allowNull: false,
-        type: Sequelize.STRING
+        type: Sequelize.UUID
       },
       from: {
         allowNull: false,
-        type: Sequelize.STRING
+        type: Sequelize.UUID
       },
       subject: {
         allowNull: false,
@@ -22,6 +22,14 @@ module.exports = {
       },
       body: {
         allowNull: false,
+        type: Sequelize.TEXT
+      },
+      game_id: {
+        allowNull: true,
+        type: Sequelize.UUID
+      },
+      game_secret: {
+        allowNull: true,
         type: Sequelize.STRING
       },
       read: {

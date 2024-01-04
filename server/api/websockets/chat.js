@@ -1,13 +1,14 @@
 import WebSocket, { WebSocketServer } from 'ws'
+import log from '../../services/log.js'
 
 const init = (port) => {
     const wsServer = new WebSocketServer({ port })
     wsServer.on('connection', socket => {
-        console.log(`Client connected`)
-    
+        log.entry('client connected to chat ws.', 'info')
+        
         socket.onmessage = ({ data }) => {
-            console.log(`from client: ${data}`)
             const parsed = JSON.parse(data)
+            log.entry('new message from client', 'info', parsed)
             wsServer.clients.forEach((client) => {
                 if (client.readyState === WebSocket.OPEN) {
                     const timestamp = new Date().toISOString().replace('T', ' ').substring(0,23)
@@ -22,7 +23,7 @@ const init = (port) => {
         }
     
         socket.onclose = () => {
-            console.log(`Client has disconnected`)
+            log.entry('client has disconnected from chat ws.', 'info')
         }
     })
 }
